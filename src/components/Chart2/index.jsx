@@ -67,7 +67,7 @@ const Chart2 = ({ isShown }) => {
           position: "absolute",
           top: -15,
           padding: 1,
-          minWidth: 90,
+          minWidth: 100,
         }}
       >
         <Box sx={{ display: "flex", gap: 1 }}>
@@ -119,6 +119,7 @@ const Chart2 = ({ isShown }) => {
         paddingTop: 3,
         width: "100%",
         borderRadius: 8,
+        height: 550,
       }}
     >
       <Typography sx={{ fontSize: 18 }}>t-SNE of senolytics dataset with PCA</Typography>
@@ -131,7 +132,7 @@ const Chart2 = ({ isShown }) => {
           colors={getDiamondColors}
           nodeSize={getDiamondSize}
           tooltip={renderTooltip}
-          margin={{ top: 30, right: 140, bottom: 70, left: 90 }}
+          margin={{ top: 25, right: 140, bottom: 70, left: 90 }}
           xScale={{ type: "linear", min: "auto", max: "auto" }}
           yScale={{ type: "linear", min: "auto", max: "auto" }}
           axisTop={null}
