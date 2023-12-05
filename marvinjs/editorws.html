@@ -12,10 +12,25 @@
     <script src="./gui.nocache.js"></script>
 
     <script>
-      function sketchOnLoad() {
+//       function sketchOnLoad() {
+//         if (marvin.Sketch.isSupported()) {
+//           marvin.sketcherInstance = new marvin.Sketch("sketch");
+//           marvin.Sketch.addRequestInterceptor((config) => {config.a.k = "";console.log(config)});
+//           marvin.Sketch.addRequestInterceptor( (config) => {
+//   config.setWithCredentials(true);
+// });
+//         }
+//       }
+
+function sketchOnLoad() {
         if (marvin.Sketch.isSupported()) {
           marvin.sketcherInstance = new marvin.Sketch("sketch");
-          marvin.Sketch.addRequestInterceptor((config) => (config.a.k = ""));
+          marvin.Sketch.addRequestInterceptor( (config) => {
+     config.a.k = ''
+     console.log(config)
+ config.setRequestHeader("content-type", 'application/json; charset=utf-8' );
+
+ });
         }
       }
     </script>
