@@ -9,33 +9,18 @@
     <title>Marvin JS</title>
     <link type="text/css" rel="stylesheet" href="./editor.min.css" media="screen" />
     <script src="./promise-1.0.0.min.js"></script>
-    <!-- <script src="./webservices.js"></script> -->
     <script src="./gui.nocache.js"></script>
-    <!-- <script src="./marvinjslauncher.js"></script> -->
 
     <script>
-      // called when Marvin JS loaded
       function sketchOnLoad() {
         if (marvin.Sketch.isSupported()) {
           marvin.sketcherInstance = new marvin.Sketch("sketch");
-          // marvin.sketcherInstance.setServices(getDefaultServices());
-          marvin.Sketch.addRequestInterceptor((config) => (config.a.k = ""));
-        } else {
-          alert(
-            "Cannot initiate sketcher. Current browser may not support HTML canvas or may run in Compatibility Mode."
-          );
+          marvin.Sketch.addRequestInterceptor((config) => {config.a.k = ""});
         }
       }
     </script>
   </head>
   <body class="mjs-body">
-    <noscript>
-      <div>
-        <p>
-          Your web browser must have JavaScript enabled in order for this application to display correctly.
-        </p>
-      </div>
-    </noscript>
     <div id="sketch"></div>
   </body>
 </html>

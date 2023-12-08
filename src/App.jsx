@@ -8,14 +8,14 @@ import { InitToolsContextProvider } from "./contexts/InitToolsContext";
 
 const App = () => (
   <MaterialThemeProvider>
-    <InitToolsContextProvider>
-      <ToastProvider>
+    <ToastProvider>
+      <InitToolsContextProvider>
         <PredictionContextProvider>
           <MoleculePicker />
           <PredictionResult />
         </PredictionContextProvider>
-      </ToastProvider>
-    </InitToolsContextProvider>
+      </InitToolsContextProvider>
+    </ToastProvider>
   </MaterialThemeProvider>
 );
 

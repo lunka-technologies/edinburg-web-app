@@ -35,18 +35,4 @@ export const useStyles = makeStyles(({ spacing, palette }) => ({
     borderWidth: 0,
     opacity: ({ toolsReady }) => (toolsReady ? 1 : 0),
   },
-
-  smilesWrapper: {
-    width: "100%",
-    border: `1px solid ${palette.accent.main}`,
-    borderRadius: spacing(1),
-  },
-
-  smiles: {
-    width: "100%",
-    fontWeight: "bold",
-    wordWrap: "break-word",
-    minHeight: 43,
-    padding: spacing(1),
-  },
 }));

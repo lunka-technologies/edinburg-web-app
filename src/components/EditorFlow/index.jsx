@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Fade from "@mui/material/Fade";
 import Skeleton from "@mui/material/Skeleton";
 
+import SmilesDisplay from "../SmilesDisplay";
 import { useInitToolsContext } from "../../contexts/InitToolsContext";
 import { usePredictionContext } from "../../contexts/PredictionContext";
 import { useStyles } from "./styles";
@@ -25,10 +25,10 @@ const EditorFlow = ({ isActive }) => {
   useEffect(() => {
     if (!toolsReady) return;
 
-    marvin.sketcherInstance.on("molchange", handleMoleculeChange);
+    marvin?.sketcherInstance?.on("molchange", handleMoleculeChange);
 
     return () => {
-      marvin.sketcherInstance.off("molchange", handleMoleculeChange);
+      marvin?.sketcherInstance?.off("molchange", handleMoleculeChange);
     };
   }, [toolsReady]);
 
@@ -36,16 +36,18 @@ const EditorFlow = ({ isActive }) => {
     setMarvinSmile("");
     setIsValid(true);
 
-    const mol = await marvin.sketcherInstance.exportStructure("mol");
-    const rdMol = rdkit.get_mol(mol);
+    const mol = await marvin?.sketcherInstance?.exportStructure("mol");
+    const rdKitMolecule = rdkit.get_mol(mol);
 
-    if (!rdMol) {
+    if (!rdKitMolecule) {
       setIsValid(false);
       return;
     }
 
-    const smiles = rdMol.get_smiles();
+    const smiles = rdKitMolecule.get_smiles();
     setMarvinSmile(smiles);
+
+    rdKitMolecule?.delete();
   };
 
   return (
@@ -57,14 +59,18 @@ const EditorFlow = ({ isActive }) => {
           <Skeleton className={styles.editorSkeleton} variant="rounded" animation="wave" />
         </Fade>
 
-        <iframe className={styles.editor} id="sketch" src="marvinjs/editorws.html" />
+        <iframe
+          className={styles.editor}
+          id="sketch"
+          src="marvinjs/editorws.html"
+          title="MarvinJS editor"
+          tabIndex={isActive ? 0 : -1}
+        />
       </Paper>
 
       <Typography className={styles.text}>SMILES representation:</Typography>
 
-      <Box className={styles.smilesWrapper}>
-        <Typography className={`${styles.smiles} ${styles.text}`}>{marvinSmile}</Typography>
-      </Box>
+      <SmilesDisplay smiles={marvinSmile} />
     </>
   );
 };

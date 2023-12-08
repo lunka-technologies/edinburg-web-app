@@ -9,6 +9,7 @@ const Toast = forwardRef(({ message, variant, id }, ref) => (
     severity={variant}
     elevation={6}
     ref={ref}
+    sx={{ maxWidth: 400 }}
     action={
       <IconButton size="small" aria-label="close" color="inherit" onClick={() => closeSnackbar(id)}>
         <CloseIcon fontSize="small" />

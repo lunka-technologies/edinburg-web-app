@@ -14,6 +14,12 @@ const theme = createTheme({
       main: "#d3d3d3",
       light: "#f2f2f2",
     },
+
+    chart: {
+      negative: "#FFD860",
+      positive: "#FD3900",
+      your: "#5C68F5",
+    },
   },
 });
 

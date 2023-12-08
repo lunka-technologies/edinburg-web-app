@@ -36,8 +36,8 @@ const MoleculePicker = () => {
         <SwipeableViews
           index={currentTab}
           onChangeIndex={setCurrentTab}
-          slideClassName={styles.slide}
           containerStyle={{ transition: "transform 0.35s" }}
+          slideClassName={styles.slide}
         >
           <EditorFlow isActive={currentTab === 0} />
           <InputFlow isActive={currentTab === 1} />

@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import DOMPurify from "dompurify";
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 
+import MolecularStructure from "../MolecularStructure";
 import { useInitToolsContext } from "../../contexts/InitToolsContext";
 import { usePredictionContext } from "../../contexts/PredictionContext";
 import { useStyles } from "./styles";
@@ -14,9 +13,8 @@ import { useStyles } from "./styles";
 const InputFlow = ({ isActive }) => {
   const [isValidInput, setIsValidInput] = useState(true);
   const [inputValue, setInputValue] = useState("");
-  const [moleculeSvg, setMoleculeSvg] = useState("");
   const { setCurrentSmiles } = usePredictionContext();
-  const { rdkit } = useInitToolsContext();
+  const { rdkit, toolsReady } = useInitToolsContext();
   const styles = useStyles();
 
   useEffect(() => {
@@ -32,17 +30,11 @@ const InputFlow = ({ isActive }) => {
     if (!rdkit) return;
 
     const trimmedSmile = smile.trim();
-    const molrd = rdkit.get_mol(trimmedSmile);
-    const isValid = Boolean(molrd) && !/\s/.test(trimmedSmile);
+    const rdKitMolecule = rdkit.get_mol(trimmedSmile);
+    const isValid = Boolean(rdKitMolecule) && !/\s/.test(trimmedSmile);
     setIsValidInput(isValid);
 
-    if (!isValid) {
-      setMoleculeSvg("");
-      return;
-    }
-
-    const svg = molrd.get_svg(700, 400);
-    setMoleculeSvg(svg);
+    rdKitMolecule?.delete();
   };
 
   const handleInputBlur = (event) => {
@@ -52,12 +44,7 @@ const InputFlow = ({ isActive }) => {
   const handleInputClear = () => {
     setInputValue("");
     setIsValidInput(true);
-    setMoleculeSvg("");
   };
-
-  const fillSvg = () => ({
-    __html: DOMPurify.sanitize(moleculeSvg, { USE_PROFILES: { svg: true, svgFilters: true } }),
-  });
 
   return (
     <>
@@ -65,17 +52,25 @@ const InputFlow = ({ isActive }) => {
 
       <TextField
         label="SMILES"
+        disabled={!toolsReady}
         value={inputValue}
         onChange={handleInputChange}
         onBlur={handleInputBlur}
         error={!isValidInput}
         className={styles.inputWrapper}
-        inputProps={{ spellCheck: "false" }}
+        autoComplete="off"
+        inputProps={{ spellCheck: "false", tabIndex: isActive ? 0 : -1 }}
         InputProps={{
           classes: { root: styles.input },
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton edge="end" size="small" onClick={handleInputClear}>
+              <IconButton
+                edge="end"
+                size="small"
+                onClick={handleInputClear}
+                disabled={!toolsReady}
+                tabIndex={isActive ? 0 : -1}
+              >
                 <CloseIcon fontSize="small" />
               </IconButton>
             </InputAdornment>
@@ -85,9 +80,7 @@ const InputFlow = ({ isActive }) => {
 
       <Typography className={styles.text}>Chemical structure:</Typography>
 
-      <Box className={styles.moleculeWrapper}>
-        <div className={styles.molecule} dangerouslySetInnerHTML={fillSvg()} />
-      </Box>
+      <MolecularStructure smiles={inputValue} width={700} height={400} />
     </>
   );
 };

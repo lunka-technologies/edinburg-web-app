@@ -18,6 +18,7 @@ export const useStyles = makeStyles(({ spacing, palette, shadows }) => ({
 
   text: {
     fontSize: 18,
+    textAlign: "center",
   },
 
   predictionContainer: {
@@ -25,7 +26,10 @@ export const useStyles = makeStyles(({ spacing, palette, shadows }) => ({
     alignItems: "center",
     flexDirection: "column",
     gap: spacing(3),
-    height: 100,
+    width: "100%",
+    borderRadius: spacing(3),
+    padding: spacing(3),
+    minHeight: 210,
   },
 
   predictionResult: {
@@ -42,26 +46,33 @@ export const useStyles = makeStyles(({ spacing, palette, shadows }) => ({
   },
 
   predictionSkeleton: {
-    width: 150,
-    height: 100,
+    width: "100%",
+    height: 210,
     margin: "0 auto",
+    borderRadius: spacing(3),
   },
 
-  chart: {
-    width: 700,
-    height: 700,
-    border: `1px solid ${palette.accent.main}`,
+  predictionContent: {
+    width: "100%",
     display: "flex",
-    justifyContent: "center",
+    flexDirection: "column",
     alignItems: "center",
-    fontSize: 40,
-    boxShadow: shadows[3],
-    borderRadius: spacing(1),
+    gap: spacing(1),
+  },
+
+  accordion: {
+    width: "100%",
+    boxShadow: "none",
+  },
+
+  accordionBorder: {
+    border: `1px solid ${palette.accent.main}`,
+    borderRadius: 10,
     overflow: "hidden",
   },
 
-  chartSkeleton: {
-    width: 700,
-    height: 700,
+  accordionHeading: {
+    width: "100%",
+    paddingLeft: "25px",
   },
 }));

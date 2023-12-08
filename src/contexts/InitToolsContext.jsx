@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { enqueueSnackbar } from "notistack";
 import CircularProgress from "@mui/material/CircularProgress";
 import Backdrop from "@mui/material/Backdrop";
 
@@ -11,27 +12,32 @@ const InitToolsContext = createContext({
 export const InitToolsContextProvider = ({ children }) => {
   const [marvin, setMarvin] = useState(null);
   const [rdkit, setRdkit] = useState(null);
-  const toolsReady = marvin && rdkit;
+  const [initError, setInitError] = useState(false);
+  const toolsReady = Boolean(rdkit && marvin);
 
   useEffect(() => {
     (async () => {
       try {
         const marvin = await MarvinJSUtil.getPackage("sketch");
-        console.log("marvin init");
+        if (!marvin.sketcherInstance) throw new Error();
         setMarvin(marvin);
 
         const rdkit = await window.initRDKitModule();
-        console.log("rdkit init");
         setRdkit(rdkit);
       } catch (error) {
-        console.log(error);
+        setInitError(true);
+        enqueueSnackbar({
+          message: "Tools failed to initialize. Please check your internet connection and refresh the page.",
+          variant: "error",
+          autoHideDuration: null,
+        });
       }
     })();
   }, []);
 
   return (
     <InitToolsContext.Provider value={{ marvin, rdkit, toolsReady }}>
-      <Backdrop open={!toolsReady} sx={{ zIndex: 999 }}>
+      <Backdrop open={!toolsReady && !initError} sx={{ zIndex: 999 }}>
         <CircularProgress size={100} thickness={4} />
       </Backdrop>
 
