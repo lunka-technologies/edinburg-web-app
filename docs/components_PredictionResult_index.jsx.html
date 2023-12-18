@@ -1,4 +1,32 @@
-import { useState } from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/PredictionResult/index.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/PredictionResult/index.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useState } from "react";
 import { animateScroll } from "react-scroll";
 import { enqueueSnackbar } from "notistack";
 import Box from "@mui/material/Box";
@@ -67,10 +95,10 @@ const generateRandomResult = () => ({
  */
 
 /**
- * Component for calculating and showing the prediction result. <br>
- * Predict button is active when there is valid SMILES present in current tab and blocked when request is fetching. <br>
- * Prediction result is divided in two sections: <br><br>
- * 1) First block contains inputted molecule and probability result. <br>
+ * Component for calculating and showing the prediction result. &lt;br>
+ * Predict button is active when there is valid SMILES present in current tab and blocked when request is fetching. &lt;br>
+ * Prediction result is divided in two sections: &lt;br>&lt;br>
+ * 1) First block contains inputted molecule and probability result. &lt;br>
  * 2) Second block is a {@link Chart} component representing senolytics dataset from ML model.
  *
  * @see Chart
@@ -86,12 +114,12 @@ const PredictionResult = () => {
   const styles = useStyles();
 
   /**
-   * Handler applied to button's onClick event. <br>
-   * Runs the request that gets prediction for inputted molecule. <br>
-   * When request is fetching, result sections are shown as animated skeletons. <br>
-   * On successful request, result is rendered and page is automatically scrolled to view it. <br>
-   * On failed request, result is hidden and error toast message is called. <br>
-   * Response matches the type of <em>Result</em>.
+   * Handler applied to button's onClick event. &lt;br>
+   * Runs the request that gets prediction for inputted molecule. &lt;br>
+   * When request is fetching, result sections are shown as animated skeletons. &lt;br>
+   * On successful request, result is rendered and page is automatically scrolled to view it. &lt;br>
+   * On failed request, result is hidden and error toast message is called. &lt;br>
+   * Response matches the type of &lt;em>Result&lt;/em>.
    */
   const handlePredict = async () => {
     try {
@@ -136,46 +164,69 @@ const PredictionResult = () => {
   };
 
   return (
-    <Box className={styles.container}>
-      <Button
+    &lt;Box className={styles.container}>
+      &lt;Button
         variant="contained"
         className={styles.button}
         onClick={handlePredict}
         disabled={!toolsReady || isPredictionFetching || !currentSmiles.trim()}
       >
         Calculate prediction
-      </Button>
+      &lt;/Button>
 
-      {isPredictionShown && (
-        <>
+      {isPredictionShown &amp;&amp; (
+        &lt;>
           {!isPredictionFetching ? (
-            <Paper className={styles.predictionContainer} elevation={3}>
-              <Box className={`${styles.predictionContent} ${styles.accordionBorder}`}>
-                <Accordion className={styles.accordion} disableGutters>
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="entered-molecule">
-                    <Typography className={`${styles.accordionHeading} ${styles.text}`}>Input</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails className={styles.predictionContent}>
-                    <SmilesDisplay smiles={submittedSmiles} />
-                    <MolecularStructure smiles={submittedSmiles} height={350} width={700} />
-                  </AccordionDetails>
-                </Accordion>
-              </Box>
+            &lt;Paper className={styles.predictionContainer} elevation={3}>
+              &lt;Box className={`${styles.predictionContent} ${styles.accordionBorder}`}>
+                &lt;Accordion className={styles.accordion} disableGutters>
+                  &lt;AccordionSummary expandIcon={&lt;ExpandMoreIcon />} aria-controls="entered-molecule">
+                    &lt;Typography className={`${styles.accordionHeading} ${styles.text}`}>Input&lt;/Typography>
+                  &lt;/AccordionSummary>
+                  &lt;AccordionDetails className={styles.predictionContent}>
+                    &lt;SmilesDisplay smiles={submittedSmiles} />
+                    &lt;MolecularStructure smiles={submittedSmiles} height={350} width={700} />
+                  &lt;/AccordionDetails>
+                &lt;/Accordion>
+              &lt;/Box>
 
-              <Box className={styles.predictionContent}>
-                <Typography className={styles.text}>Prediction result:</Typography>
-                <Typography className={styles.predictionResult}>{result?.prediction}</Typography>
-              </Box>
-            </Paper>
+              &lt;Box className={styles.predictionContent}>
+                &lt;Typography className={styles.text}>Prediction result:&lt;/Typography>
+                &lt;Typography className={styles.predictionResult}>{result?.prediction}&lt;/Typography>
+              &lt;/Box>
+            &lt;/Paper>
           ) : (
-            <Skeleton className={styles.predictionSkeleton} animation="wave" variant="rounded" />
+            &lt;Skeleton className={styles.predictionSkeleton} animation="wave" variant="rounded" />
           )}
 
-          <Chart isShown={!isPredictionFetching} points={result?.points} submittedSmiles={submittedSmiles} />
-        </>
+          &lt;Chart isShown={!isPredictionFetching} points={result?.points} submittedSmiles={submittedSmiles} />
+        &lt;/>
       )}
-    </Box>
+    &lt;/Box>
   );
 };
 
 export default PredictionResult;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="App.html">App</a></li><li><a href="Chart.html">Chart</a></li><li><a href="EditorFlow.html">EditorFlow</a></li><li><a href="InitToolsContextProvider.html">InitToolsContextProvider</a></li><li><a href="InputFlow.html">InputFlow</a></li><li><a href="MaterialThemeProvider.html">MaterialThemeProvider</a></li><li><a href="MolecularStructure.html">MolecularStructure</a></li><li><a href="MoleculePicker.html">MoleculePicker</a></li><li><a href="PredictionContextProvider.html">PredictionContextProvider</a></li><li><a href="PredictionResult.html">PredictionResult</a></li><li><a href="SmilesDisplay.html">SmilesDisplay</a></li><li><a href="Styling.html">Styling</a></li><li><a href="ToastProvider.html">ToastProvider</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Dec 12 2023 15:33:04 GMT+0200 (Eastern European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

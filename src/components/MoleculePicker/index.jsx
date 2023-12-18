@@ -12,6 +12,18 @@ import EditorFlow from "../EditorFlow";
 import InputFlow from "../InputFlow";
 import { useStyles } from "./styles";
 
+/**
+ * Container component responsible for choosing molecular input flow. <br>
+ * Holds {@link EditorFlow} and {@link InputFlow} as swipable slides. <br>
+ * Changing the tab sets current SMILES to [Prediction Context]{@link PredictionContextProvider}.
+ *
+ * @see EditorFlow
+ * @see InputFlow
+ * @see PredictionContextProvider
+ * @see [react-swipeable-views]{@link https://react-swipeable-views.com/api/api/}
+ *
+ * @namespace MoleculePicker
+ */
 const MoleculePicker = () => {
   const [currentTab, setCurrentTab] = useState(0);
   const styles = useStyles();

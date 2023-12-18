@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/InputFlow/index.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/InputFlow/index.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useEffect, useState } from "react";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+
+import MolecularStructure from "../MolecularStructure";
+import { useInitToolsContext } from "../../contexts/InitToolsContext";
+import { usePredictionContext } from "../../contexts/PredictionContext";
+import { useStyles } from "./styles";
+
+/**
+ * Flow component that allows user to input molecule in SMILES format. &lt;br>
+ * Valid molecule gets represented as svg by {@link MolecularStructure} component.
+ *
+ * @property {boolean} isActive Indicates whether this flow is currently selected by user
+ *
+ * @see MolecularStructure
+ * @namespace InputFlow
+ */
+const InputFlow = ({ isActive }) => {
+  const [isValidInput, setIsValidInput] = useState(true);
+  const [inputValue, setInputValue] = useState("");
+  const { setCurrentSmiles } = usePredictionContext();
+  const { rdkit, toolsReady } = useInitToolsContext();
+  const styles = useStyles();
+
+  useEffect(() => {
+    if (isActive) {
+      setCurrentSmiles(isValidInput ? inputValue : "");
+    }
+  }, [isActive, inputValue, isValidInput]);
+
+  /**
+   * Handler applied to input's onChange event. &lt;br>
+   * Chacks the validity of entered SMILES by RDKit means. &lt;br>
+   * RDKit's instance of molecule is cleared from memory when all the processing is finished.
+   */
+  const handleInputChange = (event) => {
+    const smile = event.target.value;
+    setInputValue(smile);
+
+    if (!rdkit) return;
+
+    const trimmedSmile = smile.trim();
+    const rdKitMolecule = rdkit.get_mol(trimmedSmile);
+    const isValid = Boolean(rdKitMolecule) &amp;&amp; !/\s/.test(trimmedSmile);
+    setIsValidInput(isValid);
+
+    rdKitMolecule?.delete();
+  };
+
+  /**
+   * Handler applied to input's onBlur event. &lt;br>
+   * Trims (cuts space characters from start and end of the string) the input.
+   */
+  const handleInputBlur = (event) => {
+    setInputValue(event.target.value.trim());
+  };
+
+  /**
+   * Handler applied to right input adornment's onClick event. &lt;br>
+   * Clears inputted molecule.
+   */
+  const handleInputClear = () => {
+    setInputValue("");
+    setIsValidInput(true);
+  };
+
+  return (
+    &lt;>
+      &lt;Typography className={styles.text}>Enter molecule in SMILES format:&lt;/Typography>
+
+      &lt;TextField
+        label="SMILES"
+        disabled={!toolsReady}
+        value={inputValue}
+        onChange={handleInputChange}
+        onBlur={handleInputBlur}
+        error={!isValidInput}
+        className={styles.inputWrapper}
+        autoComplete="off"
+        inputProps={{ spellCheck: "false", tabIndex: isActive ? 0 : -1 }}
+        InputProps={{
+          classes: { root: styles.input },
+          endAdornment: (
+            &lt;InputAdornment position="end">
+              &lt;IconButton
+                edge="end"
+                size="small"
+                onClick={handleInputClear}
+                disabled={!toolsReady}
+                tabIndex={isActive ? 0 : -1}
+              >
+                &lt;CloseIcon fontSize="small" />
+              &lt;/IconButton>
+            &lt;/InputAdornment>
+          ),
+        }}
+      />
+
+      &lt;Typography className={styles.text}>Chemical structure:&lt;/Typography>
+
+      &lt;MolecularStructure smiles={inputValue} width={700} height={400} />
+    &lt;/>
+  );
+};
+
+export default InputFlow;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="App.html">App</a></li><li><a href="Chart.html">Chart</a></li><li><a href="EditorFlow.html">EditorFlow</a></li><li><a href="InitToolsContextProvider.html">InitToolsContextProvider</a></li><li><a href="InputFlow.html">InputFlow</a></li><li><a href="MaterialThemeProvider.html">MaterialThemeProvider</a></li><li><a href="MolecularStructure.html">MolecularStructure</a></li><li><a href="MoleculePicker.html">MoleculePicker</a></li><li><a href="PredictionContextProvider.html">PredictionContextProvider</a></li><li><a href="PredictionResult.html">PredictionResult</a></li><li><a href="SmilesDisplay.html">SmilesDisplay</a></li><li><a href="Styling.html">Styling</a></li><li><a href="ToastProvider.html">ToastProvider</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Dec 12 2023 15:33:04 GMT+0200 (Eastern European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: providers/MaterialThemeProvider.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: providers/MaterialThemeProvider.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { CacheProvider } from "@emotion/react";
+import createCache from "@emotion/cache";
+import CssBaseline from "@mui/material/CssBaseline";
+
+/**
+ * Every component has its according style.js file. &lt;br>
+ * Styles become available by calling the exported useStyles hook. &lt;br>
+ * useStyles itself calls makeStyles from MUI, that gets theme as an argument.
+ *
+ * @example
+ * // usage of styling
+ * // spacing and palette are product of destructuring theme object
+ * export const useStyles = makeStyles(({ spacing, palette }) => ({
+ *  // custom styling className
+ *  editor: {
+ *   width: "100%",
+ *   height: "100%",
+ *   // using spacing instead of pixels brings consistensy to box sizings
+ *   borderRadius: spacing(1),
+ *   // accessing custom colors from the palette
+ *   backgroundColor: palette.accent.light,
+ *   // css property as a function that toggles its state on condition
+ *   opacity: ({ toolsReady }) => (toolsReady ? 1 : 0),
+ * },
+ *
+ * // calling the hook
+ * const styles = useStyles({ toolsReady });
+ *
+ * // applying created style
+ * &lt;Box className={styles.editor}/>
+ *
+ * @see [MaterialUI makeStyles API]{@link https://mui.com/system/styles/api/#makestyles-styles-options-hook}
+ * @namespace Styling
+ */
+
+/**
+ * Style cache that makes sure all the custom style classes override default MUI ones.
+ *
+ * @see [Material UI style cache]{@link https://mui.com/material-ui/guides/interoperability/#css-injection-order-3}
+ * @memberof MaterialThemeProvider
+ */
+const cache = createCache({
+  key: "css",
+  prepend: true,
+});
+
+/**
+ * Creates MUI theme and assigns custom solors to its palette. &lt;br>
+ * Theme can be accessed by calling useTheme hook inside of component. &lt;br>
+ * It is passed automatically as an argument to makeStyles function in styles.js files. &lt;br>
+ *
+ * @example
+ * const theme = createTheme({
+    palette: {
+      accent: {
+        main: "#d3d3d3",
+        light: "#f2f2f2",
+      },
+
+      //palette could be extended in similar way and accessed by theme.palette.yourName.yourColor
+      [yourName]: {
+        [yourColor]: [hex],
+        ...
+      }
+    },
+});
+ *
+ * @see [Material UI theming]{@link https://mui.com/material-ui/customization/theming/}
+ * @memberof MaterialThemeProvider
+ */
+const theme = createTheme({
+  palette: {
+    accent: {
+      main: "#d3d3d3",
+      light: "#f2f2f2",
+    },
+
+    chart: {
+      negative: "#FFD860",
+      positive: "#FD3900",
+      your: "#5C68F5",
+      other: "#808080",
+    },
+  },
+});
+
+/**
+ * Context provider that applies Material UI custom config to every child. It: &lt;br>&lt;br>
+ * 1) nullifies all the default styles of your browser &lt;br>
+ * 2) extends base MUI palette with custom colors &lt;br>
+ * 3) prioritizes all the custom styles over default ones
+ *
+ * @property {ReactNode} children Components that needs an access to the context
+ *
+ * @example
+ * // app should be wrapped once at its highest level
+ * // to make sure every component gains access to custom styling
+ *
+ * &lt;MaterialThemeProvider>
+ *   &lt;YourComponent/>
+ * &lt;/MaterialThemeProvider>
+ *
+ * @namespace MaterialThemeProvider
+ */
+const MaterialThemeProvider = ({ children }) => (
+  &lt;ThemeProvider theme={theme}>
+    &lt;CacheProvider value={cache}>
+      &lt;CssBaseline />
+      {children}
+    &lt;/CacheProvider>
+  &lt;/ThemeProvider>
+);
+
+export default MaterialThemeProvider;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="App.html">App</a></li><li><a href="Chart.html">Chart</a></li><li><a href="EditorFlow.html">EditorFlow</a></li><li><a href="InitToolsContextProvider.html">InitToolsContextProvider</a></li><li><a href="InputFlow.html">InputFlow</a></li><li><a href="MaterialThemeProvider.html">MaterialThemeProvider</a></li><li><a href="MolecularStructure.html">MolecularStructure</a></li><li><a href="MoleculePicker.html">MoleculePicker</a></li><li><a href="PredictionContextProvider.html">PredictionContextProvider</a></li><li><a href="PredictionResult.html">PredictionResult</a></li><li><a href="SmilesDisplay.html">SmilesDisplay</a></li><li><a href="Styling.html">Styling</a></li><li><a href="ToastProvider.html">ToastProvider</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Dec 12 2023 15:33:04 GMT+0200 (Eastern European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

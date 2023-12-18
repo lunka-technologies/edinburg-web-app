@@ -1,4 +1,32 @@
-import { useRef } from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Chart/index.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Chart/index.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useRef } from "react";
 import { exportComponentAsPNG } from "react-component-export-image";
 import { ResponsiveScatterPlotCanvas } from "@nivo/scatterplot";
 import Box from "@mui/material/Box";
@@ -15,7 +43,7 @@ import { POINT, formatPoints, drawDiamond } from "./utils";
 import { useStyles } from "./styles";
 
 /**
- * Component to visualise senolytics dataset as point on the chart. <br>
+ * Component to visualise senolytics dataset as point on the chart. &lt;br>
  * Uses [@nivo/scatterplot]{@link https://nivo.rocks/scatterplot/}.
  *
  * @property {boolean} isShown Decides whether to show the chart itself or the loading skeleton
@@ -32,7 +60,7 @@ const Chart = ({ isShown, points, submittedSmiles }) => {
   const formattedPoints = formatPoints(points);
 
   /**
-   * Function that checks the group of every point and sets the color picked from theme. <br>
+   * Function that checks the group of every point and sets the color picked from theme. &lt;br>
    * Colors are assigned in {@link MaterialThemeProvider}.
    *
    * @property {string} serieId Group name
@@ -56,7 +84,7 @@ const Chart = ({ isShown, points, submittedSmiles }) => {
   };
 
   /**
-   * Function that checks the group of every point and sets the size on the chart. <br>
+   * Function that checks the group of every point and sets the size on the chart. &lt;br>
    *
    * @property {string} serieId Group name
    * @returns {number} Size proportions
@@ -66,8 +94,8 @@ const Chart = ({ isShown, points, submittedSmiles }) => {
   };
 
   /**
-   * Function to render the tooltip. <br>
-   * Shows groupName, color of the node and axis. <br>
+   * Function to render the tooltip. &lt;br>
+   * Shows groupName, color of the node and axis. &lt;br>
    * Molecule is represented by {@link MolecularStructure}.
    *
    * @property {Object} node Properties of point
@@ -80,21 +108,21 @@ const Chart = ({ isShown, points, submittedSmiles }) => {
     const { x, y, smiles } = data;
 
     return (
-      <Paper className={styles.tooltipContainer} elevation={4}>
-        <Box className={styles.tooltipLine}>
-          <SquareIcon className={styles.tooltipIcon} htmlColor={color} />
-          <Typography className={styles.tooltipHeading}>{serieId}</Typography>
-        </Box>
+      &lt;Paper className={styles.tooltipContainer} elevation={4}>
+        &lt;Box className={styles.tooltipLine}>
+          &lt;SquareIcon className={styles.tooltipIcon} htmlColor={color} />
+          &lt;Typography className={styles.tooltipHeading}>{serieId}&lt;/Typography>
+        &lt;/Box>
 
-        <Box className={styles.tooltipLine}>
-          <Typography className={styles.tooltipAxis}>x:</Typography>
-          <Typography className={styles.tooltipText}>{x.toFixed(3)},</Typography>
-          <Typography className={styles.tooltipAxis}>y:</Typography>
-          <Typography className={styles.tooltipText}>{y.toFixed(3)}</Typography>
-        </Box>
+        &lt;Box className={styles.tooltipLine}>
+          &lt;Typography className={styles.tooltipAxis}>x:&lt;/Typography>
+          &lt;Typography className={styles.tooltipText}>{x.toFixed(3)},&lt;/Typography>
+          &lt;Typography className={styles.tooltipAxis}>y:&lt;/Typography>
+          &lt;Typography className={styles.tooltipText}>{y.toFixed(3)}&lt;/Typography>
+        &lt;/Box>
 
-        <MolecularStructure smiles={smiles} width={400} height={300} />
-      </Paper>
+        &lt;MolecularStructure smiles={smiles} width={400} height={300} />
+      &lt;/Paper>
     );
   };
 
@@ -107,20 +135,20 @@ const Chart = ({ isShown, points, submittedSmiles }) => {
   };
 
   if (!isShown) {
-    return <Skeleton className={styles.skeleton} animation="wave" variant="rounded" />;
+    return &lt;Skeleton className={styles.skeleton} animation="wave" variant="rounded" />;
   }
 
   return (
-    formattedPoints.length > 0 && (
-      <Paper className={styles.container} elevation={3}>
-        <IconButton className={styles.export} onClick={exportChart} size="large" aria-label="export chart">
-          <SaveIcon fontSize="inherit" />
-        </IconButton>
+    formattedPoints.length > 0 &amp;&amp; (
+      &lt;Paper className={styles.container} elevation={3}>
+        &lt;IconButton className={styles.export} onClick={exportChart} size="large" aria-label="export chart">
+          &lt;SaveIcon fontSize="inherit" />
+        &lt;/IconButton>
 
-        <Typography className={styles.text}>t-SNE of senolytics dataset with PCA</Typography>
+        &lt;Typography className={styles.text}>t-SNE of senolytics dataset with PCA&lt;/Typography>
 
-        <Box className={styles.chart}>
-          <ResponsiveScatterPlotCanvas
+        &lt;Box className={styles.chart}>
+          &lt;ResponsiveScatterPlotCanvas
             animate={false}
             ref={containerRef}
             data={formattedPoints}
@@ -167,10 +195,33 @@ const Chart = ({ isShown, points, submittedSmiles }) => {
               },
             ]}
           />
-        </Box>
-      </Paper>
+        &lt;/Box>
+      &lt;/Paper>
     )
   );
 };
 
 export default Chart;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="App.html">App</a></li><li><a href="Chart.html">Chart</a></li><li><a href="EditorFlow.html">EditorFlow</a></li><li><a href="InitToolsContextProvider.html">InitToolsContextProvider</a></li><li><a href="InputFlow.html">InputFlow</a></li><li><a href="MaterialThemeProvider.html">MaterialThemeProvider</a></li><li><a href="MolecularStructure.html">MolecularStructure</a></li><li><a href="MoleculePicker.html">MoleculePicker</a></li><li><a href="PredictionContextProvider.html">PredictionContextProvider</a></li><li><a href="PredictionResult.html">PredictionResult</a></li><li><a href="SmilesDisplay.html">SmilesDisplay</a></li><li><a href="Styling.html">Styling</a></li><li><a href="ToastProvider.html">ToastProvider</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Dec 12 2023 15:33:04 GMT+0200 (Eastern European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

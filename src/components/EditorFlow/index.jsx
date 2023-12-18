@@ -9,6 +9,15 @@ import { useInitToolsContext } from "../../contexts/InitToolsContext";
 import { usePredictionContext } from "../../contexts/PredictionContext";
 import { useStyles } from "./styles";
 
+/**
+ * Flow component that embeds MarvinJS editor. <br>
+ * Editor is rendered inside of iframe as outer HTML, located in /public folder. <br>
+ * Skeleton hides MarvinJS until tools succeded to initialize. <br>
+ *
+ * @property {boolean} isActive Indicates whether this flow is currently selected by user
+ *
+ * @namespace EditorFlow
+ */
 const EditorFlow = ({ isActive }) => {
   const [marvinSmile, setMarvinSmile] = useState("");
   const [isValid, setIsValid] = useState(true);
@@ -32,6 +41,15 @@ const EditorFlow = ({ isActive }) => {
     };
   }, [toolsReady]);
 
+  /**
+   * Handler applied to 'molchange' event of marvin.sketcherInstance. <br>
+   * Exports the molecule from editor in 'mol' format and validates it with RDKit. <br>
+   * Valid molecule is represented in SMILES format by {@link SmilesDisplay} component. <br>
+   * Invalid structure highlights the editor with red border. <br>
+   * RDKit's instance of molecule is cleared from memory when all the processing is finished.
+   *
+   * @see SmilesDisplay
+   */
   const handleMoleculeChange = async () => {
     setMarvinSmile("");
     setIsValid(true);

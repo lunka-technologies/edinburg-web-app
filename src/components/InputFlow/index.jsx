@@ -10,6 +10,15 @@ import { useInitToolsContext } from "../../contexts/InitToolsContext";
 import { usePredictionContext } from "../../contexts/PredictionContext";
 import { useStyles } from "./styles";
 
+/**
+ * Flow component that allows user to input molecule in SMILES format. <br>
+ * Valid molecule gets represented as svg by {@link MolecularStructure} component.
+ *
+ * @property {boolean} isActive Indicates whether this flow is currently selected by user
+ *
+ * @see MolecularStructure
+ * @namespace InputFlow
+ */
 const InputFlow = ({ isActive }) => {
   const [isValidInput, setIsValidInput] = useState(true);
   const [inputValue, setInputValue] = useState("");
@@ -23,6 +32,11 @@ const InputFlow = ({ isActive }) => {
     }
   }, [isActive, inputValue, isValidInput]);
 
+  /**
+   * Handler applied to input's onChange event. <br>
+   * Chacks the validity of entered SMILES by RDKit means. <br>
+   * RDKit's instance of molecule is cleared from memory when all the processing is finished.
+   */
   const handleInputChange = (event) => {
     const smile = event.target.value;
     setInputValue(smile);
@@ -37,10 +51,18 @@ const InputFlow = ({ isActive }) => {
     rdKitMolecule?.delete();
   };
 
+  /**
+   * Handler applied to input's onBlur event. <br>
+   * Trims (cuts space characters from start and end of the string) the input.
+   */
   const handleInputBlur = (event) => {
     setInputValue(event.target.value.trim());
   };
 
+  /**
+   * Handler applied to right input adornment's onClick event. <br>
+   * Clears inputted molecule.
+   */
   const handleInputClear = () => {
     setInputValue("");
     setIsValidInput(true);

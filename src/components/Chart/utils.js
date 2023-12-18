@@ -1,4 +1,4 @@
-export const POINT = {
+const POINT = {
   NEGATIVE: "Negative",
   POSITIVE: "Positive",
   YOUR: "Your",
@@ -10,7 +10,33 @@ const POINTS = [
   { id: 2, name: POINT.YOUR },
 ];
 
-export const formatPoints = (points) => {
+/**
+ * @typedef {} FormattedPoint
+ * @property {number} x Position of point on X axis, 3 digits after decimal
+ * @property {number} y Position of point on Y axis, 3 digits after decimal
+ * @property {string} smiles Molecule in SMILES format
+ *
+ * @memberof Chart
+ */
+
+/**
+ * @typedef {} FormattedGroup
+ * @property {string} id Label for group of points in the chart
+ * @property {FormattedPoint[]} data Points for the chart
+ *
+ * @memberof Chart
+ */
+
+/**
+ * Formats the array of points from /predict request to take the shape necessary for the chart. <br>
+ * If groupId in numerical format is not assigned to its respective groupName, groupId will be used as groupName.
+ *
+ * @property {Points[]} points Raw points
+ * @returns {FormattedGroup[]}
+ *
+ * @memberof Chart
+ */
+const formatPoints = (points) => {
   try {
     const pointMap = points.reduce((acc, { x, y, smiles, groupId }) => {
       const groupName = POINTS.find(({ id }) => id === groupId)?.name || groupId;
@@ -32,7 +58,16 @@ export const formatPoints = (points) => {
   }
 };
 
-export const drawDiamond = (ctx, node) => {
+/**
+ * Function to shape the points into diamonds. <br>
+ * Scatterplot passes the arguments under the hood.
+ *
+ * @property {Object} ctx Context of canvas
+ * @property {Object} node Properties of point
+ *
+ * @memberof Chart
+ */
+const drawDiamond = (ctx, node) => {
   const { x, size, color } = node;
   const y = node.y - 4.5;
 
@@ -45,3 +80,5 @@ export const drawDiamond = (ctx, node) => {
   ctx.fillStyle = color;
   ctx.fill();
 };
+
+export { POINT, formatPoints, drawDiamond };
