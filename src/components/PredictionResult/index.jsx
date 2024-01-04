@@ -13,40 +13,10 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import Chart from "../Chart";
 import SmilesDisplay from "../SmilesDisplay";
+import MolecularStructure from "../MolecularStructure";
 import { usePredictionContext } from "../../contexts/PredictionContext";
 import { useInitToolsContext } from "../../contexts/InitToolsContext";
 import { useStyles } from "./styles";
-import MolecularStructure from "../MolecularStructure";
-
-const SMILES = [
-  "O1C=C[C@H]([C@H]1O2)c3c2cc(OC)c4c3OC(=O)C5=C4CCC(=O)5",
-  "OC[C@@H](O1)[C@@H](O)[C@H](O)[C@@H](O)[C@H](O)1",
-  "OC[C@@H](O1)[C@@H](O)[C@H](O)[C@@H]2[C@@H]1c3c(O)c(OC)c(O)cc3C(=O)O2",
-  "CC[C@H](O1)CC[C@@]12CCCO2",
-  "OCCc1c(C)[n+](cs1)Cc2cnc(C)nc2N",
-];
-
-const getRandomSmiles = () => {
-  return SMILES[Math.round((SMILES.length - 1) * Math.random())];
-};
-
-const generateRandomPoints = ({ amount, group }) => {
-  return [...Array(amount)].map(() => ({
-    x: -20 + Math.random() * 40,
-    y: -7 + Math.random() * 14,
-    smiles: getRandomSmiles(),
-    groupId: group,
-  }));
-};
-
-const generateRandomResult = () => ({
-  prediction: Math.random().toFixed(3),
-  points: [
-    ...generateRandomPoints({ amount: 1500, group: 0 }),
-    ...generateRandomPoints({ amount: 50, group: 1 }),
-    ...generateRandomPoints({ amount: 1, group: 2 }),
-  ],
-});
 
 /**
  * @typedef {} Point
@@ -100,25 +70,20 @@ const PredictionResult = () => {
       setIsPredictionFetching(true);
       setResult(null);
 
-      // const response = await fetch(`https://c8c1-185-181-16-238.ngrok-free.app/predict`, {
-      //   method: "POST",
-      //   body: JSON.stringify({ smiles: currentSmiles }),
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // });
-      // const prediction = await response.json();
+      const response = await fetch(`https://4571-185-181-16-238.ngrok-free.app/predict`, {
+        method: "POST",
+        body: JSON.stringify({ smiles: currentSmiles }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const prediction = await response.json();
 
-      // if (prediction?.detail) {
-      //   throw new Error(prediction.detail);
-      // }
+      if (prediction?.detail) {
+        throw new Error(prediction.detail);
+      }
 
-      // setResult(prediction);
-
-      // setResult({ ...prediction, ...generateRandomResult() });
-
-      await new Promise((res, rej) => setTimeout(res, 2000));
-      setResult(generateRandomResult());
+      setResult(prediction);
 
       animateScroll.scrollToBottom({
         duration: 1200,

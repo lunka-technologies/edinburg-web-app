@@ -117,7 +117,7 @@ const Chart = ({ isShown, points, submittedSmiles }) => {
           <SaveIcon fontSize="inherit" />
         </IconButton>
 
-        <Typography className={styles.text}>t-SNE of senolytics dataset with PCA</Typography>
+        <Typography className={styles.text}>UMAP of senolytics dataset with PCA</Typography>
 
         <Box className={styles.chart}>
           <ResponsiveScatterPlotCanvas
@@ -138,7 +138,7 @@ const Chart = ({ isShown, points, submittedSmiles }) => {
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 0,
-              legend: "t-SNE x",
+              legend: "UMAP x",
               legendPosition: "middle",
               legendOffset: 45,
             }}
@@ -147,7 +147,7 @@ const Chart = ({ isShown, points, submittedSmiles }) => {
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 0,
-              legend: "t-SNE y",
+              legend: "UMAP y",
               legendPosition: "middle",
               legendOffset: -52,
             }}
